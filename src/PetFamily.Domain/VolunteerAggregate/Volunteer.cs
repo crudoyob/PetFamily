@@ -1,4 +1,6 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.ValueObjects;
 using PetFamily.Domain.VolunteerAggregate.PetEntity;
@@ -7,25 +9,12 @@ using PetFamily.Domain.VolunteerAggregate.ValueObjects;
 
 namespace PetFamily.Domain.VolunteerAggregate;
 
-public class Volunteer : EntityId<VolunteerId>
+public sealed class Volunteer : EntityId<VolunteerId>
 {
     private readonly List<SocialNetwork> _socialNetworks = new();
     private readonly List<HelpRequisite> _helpRequisites = new();
     private readonly List<Pet> _pets = new();
-    
-    private Volunteer(VolunteerId volunteerId) : base(volunteerId)
-    {
-    }
 
-    public Volunteer(VolunteerId volunteerId, FullName fullName, Email email, string description, 
-        PhoneNumber phoneNumber) : base(volunteerId)
-    {
-        FullName = fullName;
-        Email = email;
-        Description = description;
-        PhoneNumber = phoneNumber;
-    }
-    
     public FullName FullName { get; private set; }
     public Email Email { get; private set; }
     public string Description { get; private set; }
@@ -34,22 +23,40 @@ public class Volunteer : EntityId<VolunteerId>
     public IReadOnlyList<SocialNetwork> SocialNetworks => _socialNetworks;
     public IReadOnlyList<HelpRequisite> HelpRequisites => _helpRequisites;
     public IReadOnlyList<Pet> Pets => _pets;
-    
+
+    private Volunteer(VolunteerId id) : base(id) { }
+
+    private Volunteer(VolunteerId id, FullName fullName, Email email, string description,
+        PhoneNumber phoneNumber, int yearsOfExperience = 0) : base(id)
+    {
+        FullName = fullName;
+        Email = email;
+        Description = description;
+        YearsOfExperience = yearsOfExperience;
+        PhoneNumber = phoneNumber;
+    }
+
     public int CountFoundHomePets() => _pets.Count(p => p.HelpStatus == HelpStatus.FoundHome);
     public int CountLookingForHomePets() => _pets.Count(p => p.HelpStatus == HelpStatus.LookingForHome);
     public int CountNeedsHelpPets() => _pets.Count(p => p.HelpStatus == HelpStatus.NeedsHelp);
-    
+
     public int NumberOfPetsFoundHome => CountFoundHomePets();
     public int NumberOfPetsLookingForHome => CountLookingForHomePets();
     public int NumberOfPetsNeedsHelp => CountNeedsHelpPets();
-    
-    public static Result<Volunteer> Create(VolunteerId volunteerId, FullName fullName, Email email, string description, 
-        PhoneNumber phoneNumber)
+
+    public static Result<Volunteer> Create(VolunteerId id, FullName fullName, Email email, string description,
+        PhoneNumber phoneNumber, int yearsOfExperience = 0)
     {
         if (string.IsNullOrWhiteSpace(description))
             return Result.Failure<Volunteer>("Описание волонтёра не может быть пустым");
 
-        return Result.Success(new Volunteer(volunteerId, fullName, email, description, phoneNumber));
+        if (description.Length > LengthConstants.Length1500)
+            return Result.Failure<Volunteer>
+                ($"Описание волонтёра не может превышать {LengthConstants.Length1500} символов");
+
+        if (yearsOfExperience < 0)
+            return Result.Failure<Volunteer>("Опыт работы не может быть отрицательным");
+
+        return Result.Success(new Volunteer(id, fullName, email, description, phoneNumber, yearsOfExperience));
     }
-    
 }
