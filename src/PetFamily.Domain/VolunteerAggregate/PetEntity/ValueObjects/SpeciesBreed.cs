@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
-using PetFamily.Domain.SpeciesAggregate.ValueObjects;
 using PetFamily.Domain.SpeciesAggregate.BreedEntity.ValueObjects;
+using PetFamily.Domain.SpeciesAggregate.ValueObjects;
 
 namespace PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
 
@@ -14,7 +14,7 @@ public record SpeciesBreed
         SpeciesId = speciesId;
         BreedId = breedId;
     }
-    
+
     public static Result<SpeciesBreed> Create(SpeciesId speciesId, BreedId breedId)
     {
         return Result.Success(new SpeciesBreed(speciesId, breedId));

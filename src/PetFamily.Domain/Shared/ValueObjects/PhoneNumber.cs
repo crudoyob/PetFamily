@@ -13,22 +13,26 @@ public record PhoneNumber
     );
 
     public string Value { get; }
-    
+
     private PhoneNumber(string value)
     {
         Value = Regex.Replace(value, @"[^\d+]", "");
     }
-    
+
     public static Result<PhoneNumber> Create(string value)
     {
-        value = value?.Trim();
-        
+        value = value?.Trim() ?? string.Empty;
+
         if (string.IsNullOrWhiteSpace(value))
             return Result.Failure<PhoneNumber>("Номер телефона не может быть пустым");
-        
+
         if (!PhoneRegex.IsMatch(value))
             return Result.Failure<PhoneNumber>("Некорректный формат номера телефона");
-        
+
+        if (value.Length > LengthConstants.Length100)
+            return Result.Failure<PhoneNumber>
+                ($"Номер телефона не может превышать {LengthConstants.Length100} символов");
+
         return Result.Success(new PhoneNumber(value));
     }
 }
