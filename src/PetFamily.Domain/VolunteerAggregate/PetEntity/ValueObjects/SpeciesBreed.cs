@@ -17,6 +17,6 @@ public record SpeciesBreed
 
     public static Result<SpeciesBreed> Create(SpeciesId speciesId, BreedId breedId)
     {
-        return Result.Success(new SpeciesBreed(speciesId, breedId));
+        return new SpeciesBreed(speciesId, breedId);
     }
 }

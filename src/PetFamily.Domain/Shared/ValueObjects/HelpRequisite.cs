@@ -13,22 +13,20 @@ public record HelpRequisite
         Description = description;
     }
 
-    public static Result<HelpRequisite> Create(string name, string description)
+    public static Result<HelpRequisite, Error> Create(string name, string description)
     {
         if (string.IsNullOrWhiteSpace(name))
-            return Result.Failure<HelpRequisite>("Имя реквизита для помощи не может быть пустым");
+            return Errors.General.ValueIsRequired("Name");
 
         if (name.Length > LengthConstants.Length100)
-            return Result.Failure<HelpRequisite>
-                ($"Имя реквизита не может превышать {LengthConstants.Length100} символов");
+            return Errors.General.ValueIsInvalid("Name");
 
         if (string.IsNullOrWhiteSpace(description))
-            return Result.Failure<HelpRequisite>("Описание реквизита для помощи не может быть пустым");
+            return Errors.General.ValueIsRequired("Description");
 
         if (description.Length > LengthConstants.Length250)
-            return Result.Failure<HelpRequisite>
-                ($"Описание реквизита не может превышать {LengthConstants.Length250} символов");
+            return Errors.General.ValueIsInvalid("Description");
 
-        return Result.Success(new HelpRequisite(name, description));
+        return new HelpRequisite(name, description);
     }
 }

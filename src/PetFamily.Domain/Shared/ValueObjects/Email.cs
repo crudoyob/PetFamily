@@ -20,20 +20,19 @@ public record Email
         Value = value.ToLowerInvariant();
     }
 
-    public static Result<Email> Create(string value)
+    public static Result<Email, Error> Create(string value)
     {
         value = value?.Trim() ?? string.Empty;
 
         if (string.IsNullOrWhiteSpace(value))
-            return Result.Failure<Email>("Адрес электронной почты не может быть пустым");
+            return Errors.General.ValueIsRequired("Email");
 
         if (!EmailRegex.IsMatch(value))
-            return Result.Failure<Email>("Некорректный формат адреса электронной почты");
+            return Errors.General.ValueIsInvalid("Email");
 
         if (value.Length > LengthConstants.Length100)
-            return Result.Failure<Email>
-                ($"Адрес электронной почты не может превышать {LengthConstants.Length100} символов");
+            return Errors.General.ValueIsInvalid("Email");
 
-        return Result.Success(new Email(value));
+        return new Email(value);
     }
 }

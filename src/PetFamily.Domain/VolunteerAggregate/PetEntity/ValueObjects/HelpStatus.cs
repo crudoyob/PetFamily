@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
 
@@ -17,14 +18,14 @@ public sealed record HelpStatus
 
     public override string ToString() => Value;
 
-    public static Result<HelpStatus> Create(string value)
+    public static Result<HelpStatus, Error> Create(string value)
     {
         return value switch
         {
-            "Нуждается в помощи" => Result.Success(NeedsHelp),
-            "Ищет дом" => Result.Success(LookingForHome),
-            "Нашел дом" => Result.Success(FoundHome),
-            _ => Result.Failure<HelpStatus>($"Некорректный статус помощи питомца: {value}")
+            "Нуждается в помощи" => NeedsHelp,
+            "Ищет дом" => LookingForHome,
+            "Нашел дом" => FoundHome,
+            _ => Errors.General.ValueIsInvalid("HelpStatus")
         };
     }
 }

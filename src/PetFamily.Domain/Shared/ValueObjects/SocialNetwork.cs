@@ -14,22 +14,20 @@ public record SocialNetwork
         Url = url;
     }
 
-    public static Result<SocialNetwork> Create(string name, string url)
+    public static Result<SocialNetwork, Error> Create(string name, string url)
     {
         if (string.IsNullOrWhiteSpace(name))
-            return Result.Failure<SocialNetwork>("Имя социальной сети не может быть пустым");
+            return Errors.General.ValueIsRequired("Name");
 
         if (name.Length > LengthConstants.Length100)
-            return Result.Failure<SocialNetwork>
-                ($"Имя социальной сети не может превышать {LengthConstants.Length100} символов");
+            return Errors.General.ValueIsInvalid("Name");
 
         if (string.IsNullOrWhiteSpace(url))
-            return Result.Failure<SocialNetwork>("Url социальной сети не может быть пустым");
+            return Errors.General.ValueIsRequired("Url");
 
         if (url.Length > LengthConstants.Length250)
-            return Result.Failure<SocialNetwork>
-                ($"Url социальной сети не может превышать {LengthConstants.Length250} символов");
+            return Errors.General.ValueIsInvalid("Name");
 
-        return Result.Success(new SocialNetwork(name, url));
+        return new SocialNetwork(name, url);
     }
 }

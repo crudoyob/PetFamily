@@ -52,51 +52,53 @@ public class Pet : EntityId<PetId>
         CreatedAt = DateTime.UtcNow;
     }
 
-    public static Result<Pet> Create(PetId id, string nickname, SpeciesBreed speciesBreed, string description,
+    public static Result<Pet, Error> Create(PetId id, string nickname, SpeciesBreed speciesBreed, string description,
         string color, string healthInfo, Location location, double weight, double height, PhoneNumber phoneNumber,
         bool isNeutered, DateOnly birthDate, bool isVaccinated, HelpStatus helpStatus)
     {
         if (string.IsNullOrWhiteSpace(nickname))
-            return Result.Failure<Pet>("Кличка питомца не может быть пустой");
+            return Errors.General.ValueIsRequired("Nickname");
 
         if (nickname.Length > LengthConstants.Length100)
-            return Result.Failure<Pet>($"Кличка питомца не может превышать {LengthConstants.Length100} символов");
+            return Errors.General.ValueIsInvalid("Nickname");
 
         if (string.IsNullOrWhiteSpace(description))
-            return Result.Failure<Pet>("Описание питомца не может быть пустым");
+            return Errors.General.ValueIsRequired("Description");
 
         if (description.Length > LengthConstants.Length1500)
-            return Result.Failure<Pet>
-                ($"Описание питомца не может превышать {LengthConstants.Length1500} символов");
+            return Errors.General.ValueIsInvalid("Description");
 
         if (string.IsNullOrWhiteSpace(color))
-            return Result.Failure<Pet>("Окрас животного не может быть пустым");
+            return Errors.General.ValueIsRequired("Color");
 
         if (color.Length > LengthConstants.Length500)
-            return Result.Failure<Pet>($"Окрас животного не может превышать {LengthConstants.Length500} символов");
+            return Errors.General.ValueIsInvalid("Color");
 
         if (string.IsNullOrWhiteSpace(healthInfo))
-            return Result.Failure<Pet>("Информация о здоровье питомца не может быть пустой");
+            return Errors.General.ValueIsRequired("HealthInfo");
 
         if (healthInfo.Length > LengthConstants.Length1500)
-            return Result.Failure<Pet>
-                ($"Информация о здоровье питомца не может превышать {LengthConstants.Length1500} символов");
+            return Errors.General.ValueIsInvalid("HealthInfo");
 
-        if (weight < 0 || weight > 150)
-            return Result.Failure<Pet>("Некорректный вес питомца");
+        if (weight < 0)
+            return Errors.General.ValueIsInvalid("Weight");
 
-        if (height < 0 || height > 150)
-            return Result.Failure<Pet>("Некорректный рост питомца");
+        if (weight > 150)
+            return Errors.General.ValueIsInvalid("Weight");
+
+        if (height < 0)
+            return Errors.General.ValueIsInvalid("Height");
+
+        if (height > 150)
+            return Errors.General.ValueIsInvalid("Height");
 
         if (birthDate < DateOnly.FromDateTime(DateTime.Today.AddYears(-35)))
-            return Result.Failure<Pet>("Дата рождения питомца не может быть более 35 лет назад");
+            return Errors.General.ValueIsInvalid("BirthDate");
 
         if (birthDate > DateOnly.FromDateTime(DateTime.Today))
-            return Result.Failure<Pet>("Дата рождения питомца не может быть в будущем");
+            return Errors.General.ValueIsInvalid("BirthDate");
 
-        var result = new Pet(id, nickname, speciesBreed, description, color, healthInfo, location, weight, height,
+        return new Pet(id, nickname, speciesBreed, description, color, healthInfo, location, weight, height,
             phoneNumber, isNeutered, birthDate, isVaccinated, helpStatus);
-
-        return Result.Success(result);
     }
 }

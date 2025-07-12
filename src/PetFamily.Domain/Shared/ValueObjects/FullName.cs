@@ -16,26 +16,23 @@ public record FullName
         Patronymic = patronymic;
     }
 
-    public static Result<FullName> Create(string firstName, string lastName, string? patronymic = null)
+    public static Result<FullName, Error> Create(string firstName, string lastName, string? patronymic = null)
     {
         if (string.IsNullOrWhiteSpace(firstName))
-            return Result.Failure<FullName>("Имя человека не может быть пустым");
+            return Errors.General.ValueIsRequired("FirstName");
 
         if (firstName.Length > LengthConstants.Length100)
-            return Result.Failure<FullName>
-                ($"Имя человека не может превышать {LengthConstants.Length100} символов");
+            return Errors.General.ValueIsInvalid("FirstName");
 
         if (string.IsNullOrWhiteSpace(lastName))
-            return Result.Failure<FullName>("Фамилия человека не может быть пустой");
+            return Errors.General.ValueIsRequired("LastName");
 
         if (lastName.Length > LengthConstants.Length100)
-            return Result.Failure<FullName>
-                ($"Фамилия человека не может превышать {LengthConstants.Length100} символов");
+            return Errors.General.ValueIsInvalid("LastName");
 
         if (patronymic != null && patronymic.Length > LengthConstants.Length100)
-            return Result.Failure<FullName>
-                ($"Отчество человека не может превышать {LengthConstants.Length100} символов");
+            return Errors.General.ValueIsRequired("Patronymic");
 
-        return Result.Success(new FullName(firstName, lastName, patronymic));
+        return new FullName(firstName, lastName, patronymic);
     }
 }
