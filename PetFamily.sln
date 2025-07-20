@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		compose.yaml = compose.yaml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Contracts", "PetFamily.Contracts\PetFamily.Contracts.csproj", "{C871C44E-A654-4670-839E-8B1BBEC894ED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetFamily.Contracts", "src\PetFamily.Contracts\PetFamily.Contracts.csproj", "{C871C44E-A654-4670-839E-8B1BBEC894ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
