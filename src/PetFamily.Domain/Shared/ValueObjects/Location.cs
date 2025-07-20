@@ -32,55 +32,54 @@ public record Location
         PostalCode = postalCode;
     }
 
-    public static Result<Location> Create(string country, string region, string city, string street, string building,
+    public static Result<Location, Error> Create(string country, string region, string city, string street, string building,
         string? district = null, string? letter = null, string? corpus = null, string? construction = null,
         string? apartment = null, string? postalCode = null)
     {
         if (string.IsNullOrWhiteSpace(country))
-            return Result.Failure<Location>("Страна не может быть пустой");
-        if (country.Length > LengthConstants.Length50)
-            return Result.Failure<Location>($"Страна не может превышать {LengthConstants.Length50} символов");
+            return Errors.General.ValueIsRequired("Country");
+        if (country.Length > LengthConstants.LENGTH50)
+            return Errors.General.ValueIsInvalid("Country");
 
         if (string.IsNullOrWhiteSpace(region))
-            return Result.Failure<Location>("Регион не может быть пустым");
-        if (region.Length > LengthConstants.Length100)
-            return Result.Failure<Location>($"Регион не может превышать {LengthConstants.Length100} символов");
+            return Errors.General.ValueIsRequired("Region");
+        if (region.Length > LengthConstants.LENGTH100)
+            return Errors.General.ValueIsInvalid("Region");
 
         if (string.IsNullOrWhiteSpace(city))
-            return Result.Failure<Location>("Город не может быть пустым");
-        if (city.Length > LengthConstants.Length100)
-            return Result.Failure<Location>($"Город не может превышать {LengthConstants.Length100} символов");
+            return Errors.General.ValueIsRequired("City");
+        if (city.Length > LengthConstants.LENGTH100)
+            return Errors.General.ValueIsInvalid("City");
 
         if (string.IsNullOrWhiteSpace(street))
-            return Result.Failure<Location>("Улица не может быть пустой");
-        if (street.Length > LengthConstants.Length100)
-            return Result.Failure<Location>($"Улица не может превышать {LengthConstants.Length100} символов");
+            return Errors.General.ValueIsRequired("Street");
+        if (street.Length > LengthConstants.LENGTH100)
+            return Errors.General.ValueIsInvalid("Street");
 
         if (string.IsNullOrWhiteSpace(building))
-            return Result.Failure<Location>("Номер дома не может быть пустым");
-        if (building.Length > LengthConstants.Length100)
-            return Result.Failure<Location>($"Номер дома не может превышать {LengthConstants.Length100} символов");
+            return Errors.General.ValueIsRequired("Building");
+        if (building.Length > LengthConstants.LENGTH100)
+            return Errors.General.ValueIsInvalid("Building");
 
-        if (district != null && district.Length > LengthConstants.Length100)
-            return Result.Failure<Location>($"Район не может превышать {LengthConstants.Length100} символов");
+        if (district != null && district.Length > LengthConstants.LENGTH100)
+            return Errors.General.ValueIsInvalid("District");
 
-        if (letter != null && letter.Length > LengthConstants.Length1)
-            return Result.Failure<Location>($"Литера не может превышать {LengthConstants.Length1} символ");
+        if (letter != null && letter.Length > LengthConstants.LENGTH1)
+            return Errors.General.ValueIsInvalid("Letter");
 
-        if (corpus != null && corpus.Length > LengthConstants.Length100)
-            return Result.Failure<Location>($"Корпус не может превышать {LengthConstants.Length100} символов");
+        if (corpus != null && corpus.Length > LengthConstants.LENGTH100)
+            return Errors.General.ValueIsInvalid("Corpus");
 
-        if (construction != null && construction.Length > LengthConstants.Length100)
-            return Result.Failure<Location>($"Строение не может превышать {LengthConstants.Length100} символов");
+        if (construction != null && construction.Length > LengthConstants.LENGTH100)
+            return Errors.General.ValueIsInvalid("Construction");
 
-        if (apartment != null && apartment.Length > LengthConstants.Length100)
-            return Result.Failure<Location>($"Квартира не может превышать {LengthConstants.Length100} символов");
+        if (apartment != null && apartment.Length > LengthConstants.LENGTH100)
+            return Errors.General.ValueIsInvalid("Apartment");
 
-        if (postalCode != null && postalCode.Length > LengthConstants.Length6)
-            return Result.Failure<Location>
-                ($"Почтовый индекс не может превышать {LengthConstants.Length6} символов");
+        if (postalCode != null && postalCode.Length > LengthConstants.LENGTH6)
+            return Errors.General.ValueIsInvalid("PostalCode");
 
-        return Result.Success(new Location(country, region, city, district, street, building, letter, corpus, 
-            construction, apartment, postalCode));
+        return new Location(country, region, city, district, street, building, letter, corpus, construction,
+            apartment, postalCode);
     }
 }

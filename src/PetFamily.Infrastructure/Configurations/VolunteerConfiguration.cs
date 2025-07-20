@@ -23,19 +23,19 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
 
         builder.OwnsOne(v => v.FullName, fnb =>
         {
-            fnb.Property(fn => fn.FirstName)
-                .IsRequired()
-                .HasMaxLength(LengthConstants.Length100)
-                .HasColumnName("first_name");
-            
             fnb.Property(fn => fn.LastName)
                 .IsRequired()
-                .HasMaxLength(LengthConstants.Length100)
+                .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("last_name");
+            
+            fnb.Property(fn => fn.FirstName)
+                .IsRequired()
+                .HasMaxLength(LengthConstants.LENGTH100)
+                .HasColumnName("first_name");
             
             fnb.Property(fn => fn.Patronymic)
                 .IsRequired(false)
-                .HasMaxLength(LengthConstants.Length100)
+                .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("patronymic");
         });
 
@@ -43,13 +43,13 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
         {
             eb.Property(e => e.Value)
                 .IsRequired()
-                .HasMaxLength(LengthConstants.Length100)
+                .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("email");
         });
         
         builder.Property(v => v.Description)
             .IsRequired()
-            .HasMaxLength(LengthConstants.Length1500)
+            .HasMaxLength(LengthConstants.LENGTH1500)
             .HasColumnName("description");
         
         builder.Property(v => v.YearsOfExperience)
@@ -60,7 +60,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
         {
             pb.Property(ph => ph.Value)
                 .IsRequired()
-                .HasMaxLength(LengthConstants.Length100)
+                .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("phone_number");
         });
 
@@ -70,12 +70,12 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             
             snb.Property(sn => sn.Name)
                 .IsRequired()
-                .HasMaxLength(LengthConstants.Length100)
+                .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("name");
             
             snb.Property(sn => sn.Url)
                 .IsRequired()
-                .HasMaxLength(LengthConstants.Length250)
+                .HasMaxLength(LengthConstants.LENGTH250)
                 .HasColumnName("url");
         });
 
@@ -85,12 +85,12 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             
             hrb.Property(hr => hr.Name)
                 .IsRequired()
-                .HasMaxLength(LengthConstants.Length100)
+                .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("name");
 
             hrb.Property(hr => hr.Description)
                 .IsRequired(false)
-                .HasMaxLength(LengthConstants.Length250)
+                .HasMaxLength(LengthConstants.LENGTH250)
                 .HasColumnName("description");
         });
 

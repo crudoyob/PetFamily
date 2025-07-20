@@ -15,15 +15,14 @@ public class Breed : EntityId<BreedId>
         Name = name;
     }
 
-    public static Result<Breed> Create(BreedId id, string name)
+    public static Result<Breed, Error> Create(BreedId id, string name)
     {
         if (string.IsNullOrWhiteSpace(name))
-            return Result.Failure<Breed>("Имя породы питомца не может быть пустым");
+            return Errors.General.ValueIsRequired("Name");
 
-        if (name.Length > LengthConstants.Length100)
-            return Result.Failure<Breed>
-                ($"Имя породы питомца не может превышать {LengthConstants.Length100} символов");
+        if (name.Length > LengthConstants.LENGTH100)
+            return Errors.General.ValueIsInvalid("Name");
 
-        return Result.Success(new Breed(id, name));
+        return new Breed(id, name);
     }
 }

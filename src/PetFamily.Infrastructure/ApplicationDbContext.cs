@@ -4,14 +4,15 @@ using Microsoft.Extensions.Logging;
 using PetFamily.Domain.SpeciesAggregate;
 using PetFamily.Domain.VolunteerAggregate;
 
+
 namespace PetFamily.Infrastructure;
 
 public class ApplicationDbContext(IConfiguration configuration): DbContext
 {
     private const string DATABASE = nameof(Database);
     
-    DbSet<Volunteer> Volunteers => Set<Volunteer>();
-    DbSet<Species> Species => Set<Species>();
+    public DbSet<Volunteer> Volunteers => Set<Volunteer>();
+    public DbSet<Species> Species => Set<Species>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

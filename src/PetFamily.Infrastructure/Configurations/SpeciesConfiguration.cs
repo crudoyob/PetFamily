@@ -23,7 +23,7 @@ public class SpeciesConfiguration : IEntityTypeConfiguration<Species>
 
         builder.Property(s => s.Name)
             .IsRequired()
-            .HasMaxLength(LengthConstants.Length100)
+            .HasMaxLength(LengthConstants.LENGTH100)
             .HasColumnName("name");
 
         builder.HasMany(s => s.Breeds)

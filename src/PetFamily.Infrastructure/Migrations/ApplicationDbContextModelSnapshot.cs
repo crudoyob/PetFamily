@@ -319,52 +319,20 @@ namespace PetFamily.Infrastructure.Migrations
                             b1.Property<Guid>("PetId")
                                 .HasColumnType("uuid");
 
+                            b1.Property<Guid>("BreedId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("breed_id");
+
+                            b1.Property<Guid>("SpeciesId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("species_id");
+
                             b1.HasKey("PetId");
 
                             b1.ToTable("pets");
 
                             b1.WithOwner()
                                 .HasForeignKey("PetId");
-
-                            b1.OwnsOne("PetFamily.Domain.SpeciesAggregate.BreedEntity.ValueObjects.BreedId", "BreedId", b2 =>
-                                {
-                                    b2.Property<Guid>("SpeciesBreedPetId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<Guid>("Value")
-                                        .HasColumnType("uuid")
-                                        .HasColumnName("breed_id");
-
-                                    b2.HasKey("SpeciesBreedPetId");
-
-                                    b2.ToTable("pets");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("SpeciesBreedPetId");
-                                });
-
-                            b1.OwnsOne("PetFamily.Domain.SpeciesAggregate.ValueObjects.SpeciesId", "SpeciesId", b2 =>
-                                {
-                                    b2.Property<Guid>("SpeciesBreedPetId")
-                                        .HasColumnType("uuid");
-
-                                    b2.Property<Guid>("Value")
-                                        .HasColumnType("uuid")
-                                        .HasColumnName("species_id");
-
-                                    b2.HasKey("SpeciesBreedPetId");
-
-                                    b2.ToTable("pets");
-
-                                    b2.WithOwner()
-                                        .HasForeignKey("SpeciesBreedPetId");
-                                });
-
-                            b1.Navigation("BreedId")
-                                .IsRequired();
-
-                            b1.Navigation("SpeciesId")
-                                .IsRequired();
                         });
 
                     b.Navigation("HelpRequisites");

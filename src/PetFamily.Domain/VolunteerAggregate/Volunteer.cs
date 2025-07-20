@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.ValueObjects;
 using PetFamily.Domain.VolunteerAggregate.PetEntity;
@@ -44,19 +42,18 @@ public sealed class Volunteer : EntityId<VolunteerId>
     public int NumberOfPetsLookingForHome => CountLookingForHomePets();
     public int NumberOfPetsNeedsHelp => CountNeedsHelpPets();
 
-    public static Result<Volunteer> Create(VolunteerId id, FullName fullName, Email email, string description,
+    public static Result<Volunteer, Error> Create(VolunteerId id, FullName fullName, Email email, string description,
         PhoneNumber phoneNumber, int yearsOfExperience = 0)
     {
         if (string.IsNullOrWhiteSpace(description))
-            return Result.Failure<Volunteer>("Описание волонтёра не может быть пустым");
+            return Errors.General.ValueIsRequired("Description");
 
-        if (description.Length > LengthConstants.Length1500)
-            return Result.Failure<Volunteer>
-                ($"Описание волонтёра не может превышать {LengthConstants.Length1500} символов");
+        if (description.Length > LengthConstants.LENGTH1500)
+            return Errors.General.ValueIsInvalid("Description");
 
         if (yearsOfExperience < 0)
-            return Result.Failure<Volunteer>("Опыт работы не может быть отрицательным");
+            return Errors.General.ValueIsInvalid("YearsOfExperience");
 
-        return Result.Success(new Volunteer(id, fullName, email, description, phoneNumber, yearsOfExperience));
+        return new Volunteer(id, fullName, email, description, phoneNumber, yearsOfExperience);
     }
 }
