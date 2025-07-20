@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.ValueObjects;
 using PetFamily.Domain.VolunteerAggregate.PetEntity;
@@ -50,11 +48,11 @@ public sealed class Volunteer : EntityId<VolunteerId>
         if (string.IsNullOrWhiteSpace(description))
             return Errors.General.ValueIsRequired("Description");
 
-        if (description.Length > LengthConstants.Length1500)
+        if (description.Length > LengthConstants.LENGTH1500)
             return Errors.General.ValueIsInvalid("Description");
 
         if (yearsOfExperience < 0)
-            return Errors.General.ValueIsInvalid("Years");
+            return Errors.General.ValueIsInvalid("YearsOfExperience");
 
         return new Volunteer(id, fullName, email, description, phoneNumber, yearsOfExperience);
     }

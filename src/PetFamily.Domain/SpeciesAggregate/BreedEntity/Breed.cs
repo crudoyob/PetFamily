@@ -20,7 +20,7 @@ public class Breed : EntityId<BreedId>
         if (string.IsNullOrWhiteSpace(name))
             return Errors.General.ValueIsRequired("Name");
 
-        if (name.Length > LengthConstants.Length100)
+        if (name.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Name");
 
         return new Breed(id, name);

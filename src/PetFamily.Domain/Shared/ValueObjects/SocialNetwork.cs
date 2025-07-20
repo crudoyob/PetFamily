@@ -19,13 +19,13 @@ public record SocialNetwork
         if (string.IsNullOrWhiteSpace(name))
             return Errors.General.ValueIsRequired("Name");
 
-        if (name.Length > LengthConstants.Length100)
+        if (name.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Name");
 
         if (string.IsNullOrWhiteSpace(url))
             return Errors.General.ValueIsRequired("Url");
 
-        if (url.Length > LengthConstants.Length250)
+        if (url.Length > LengthConstants.LENGTH250)
             return Errors.General.ValueIsInvalid("Name");
 
         return new SocialNetwork(name, url);

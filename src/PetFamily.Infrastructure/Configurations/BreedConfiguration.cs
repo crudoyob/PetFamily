@@ -23,7 +23,7 @@ public class BreedConfiguration : IEntityTypeConfiguration<Breed>
         
         builder.Property(b => b.Name)
             .IsRequired()
-            .HasMaxLength(LengthConstants.Length100)
+            .HasMaxLength(LengthConstants.LENGTH100)
             .HasColumnName("name");
     }
 }

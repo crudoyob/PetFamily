@@ -5,7 +5,6 @@ using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.ValueObjects;
 using PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
-using PetFamily.Domain.VolunteerAggregate.ValueObjects;
 
 namespace PetFamily.Domain.VolunteerAggregate.PetEntity;
 
@@ -59,25 +58,25 @@ public class Pet : EntityId<PetId>
         if (string.IsNullOrWhiteSpace(nickname))
             return Errors.General.ValueIsRequired("Nickname");
 
-        if (nickname.Length > LengthConstants.Length100)
+        if (nickname.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Nickname");
 
         if (string.IsNullOrWhiteSpace(description))
             return Errors.General.ValueIsRequired("Description");
 
-        if (description.Length > LengthConstants.Length1500)
+        if (description.Length > LengthConstants.LENGTH1500)
             return Errors.General.ValueIsInvalid("Description");
 
         if (string.IsNullOrWhiteSpace(color))
             return Errors.General.ValueIsRequired("Color");
 
-        if (color.Length > LengthConstants.Length500)
+        if (color.Length > LengthConstants.LENGTH500)
             return Errors.General.ValueIsInvalid("Color");
 
         if (string.IsNullOrWhiteSpace(healthInfo))
             return Errors.General.ValueIsRequired("HealthInfo");
 
-        if (healthInfo.Length > LengthConstants.Length1500)
+        if (healthInfo.Length > LengthConstants.LENGTH1500)
             return Errors.General.ValueIsInvalid("HealthInfo");
 
         if (weight < 0)

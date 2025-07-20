@@ -24,9 +24,9 @@ public class Species : EntityId<SpeciesId>
         if (string.IsNullOrWhiteSpace(name))
             return Result.Failure<Species>("Имя вида питомца не может быть пустым");
 
-        if (name.Length > LengthConstants.Length100)
+        if (name.Length > LengthConstants.LENGTH100)
             return Result.Failure<Species>
-                ($"Имя вида питомца не может превышать {LengthConstants.Length100} символов");
+                ($"Имя вида питомца не может превышать {LengthConstants.LENGTH100} символов");
 
         return Result.Success(new Species(id, name));
     }

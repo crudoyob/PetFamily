@@ -38,45 +38,45 @@ public record Location
     {
         if (string.IsNullOrWhiteSpace(country))
             return Errors.General.ValueIsRequired("Country");
-        if (country.Length > LengthConstants.Length50)
+        if (country.Length > LengthConstants.LENGTH50)
             return Errors.General.ValueIsInvalid("Country");
 
         if (string.IsNullOrWhiteSpace(region))
             return Errors.General.ValueIsRequired("Region");
-        if (region.Length > LengthConstants.Length100)
+        if (region.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Region");
 
         if (string.IsNullOrWhiteSpace(city))
             return Errors.General.ValueIsRequired("City");
-        if (city.Length > LengthConstants.Length100)
+        if (city.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("City");
 
         if (string.IsNullOrWhiteSpace(street))
             return Errors.General.ValueIsRequired("Street");
-        if (street.Length > LengthConstants.Length100)
+        if (street.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Street");
 
         if (string.IsNullOrWhiteSpace(building))
             return Errors.General.ValueIsRequired("Building");
-        if (building.Length > LengthConstants.Length100)
+        if (building.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Building");
 
-        if (district != null && district.Length > LengthConstants.Length100)
+        if (district != null && district.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("District");
 
-        if (letter != null && letter.Length > LengthConstants.Length1)
+        if (letter != null && letter.Length > LengthConstants.LENGTH1)
             return Errors.General.ValueIsInvalid("Letter");
 
-        if (corpus != null && corpus.Length > LengthConstants.Length100)
+        if (corpus != null && corpus.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Corpus");
 
-        if (construction != null && construction.Length > LengthConstants.Length100)
+        if (construction != null && construction.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Construction");
 
-        if (apartment != null && apartment.Length > LengthConstants.Length100)
+        if (apartment != null && apartment.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Apartment");
 
-        if (postalCode != null && postalCode.Length > LengthConstants.Length6)
+        if (postalCode != null && postalCode.Length > LengthConstants.LENGTH6)
             return Errors.General.ValueIsInvalid("PostalCode");
 
         return new Location(country, region, city, district, street, building, letter, corpus, construction,

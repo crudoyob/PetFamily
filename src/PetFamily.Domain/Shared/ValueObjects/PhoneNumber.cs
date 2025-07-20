@@ -29,7 +29,7 @@ public record PhoneNumber
         if (!PhoneRegex.IsMatch(value))
             return Errors.General.ValueIsInvalid("PhoneNumber");
 
-        if (value.Length > LengthConstants.Length100)
+        if (value.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("PhoneNumber");
 
         return new PhoneNumber(value);

@@ -18,13 +18,13 @@ public record HelpRequisite
         if (string.IsNullOrWhiteSpace(name))
             return Errors.General.ValueIsRequired("Name");
 
-        if (name.Length > LengthConstants.Length100)
+        if (name.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Name");
 
         if (string.IsNullOrWhiteSpace(description))
             return Errors.General.ValueIsRequired("Description");
 
-        if (description.Length > LengthConstants.Length250)
+        if (description.Length > LengthConstants.LENGTH250)
             return Errors.General.ValueIsInvalid("Description");
 
         return new HelpRequisite(name, description);

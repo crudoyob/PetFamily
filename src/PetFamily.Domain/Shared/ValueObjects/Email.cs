@@ -30,7 +30,7 @@ public record Email
         if (!EmailRegex.IsMatch(value))
             return Errors.General.ValueIsInvalid("Email");
 
-        if (value.Length > LengthConstants.Length100)
+        if (value.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Email");
 
         return new Email(value);
