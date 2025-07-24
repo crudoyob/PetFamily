@@ -21,7 +21,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 id => id.Value,
                 value => VolunteerId.Create(value));
 
-        builder.OwnsOne(v => v.FullName, fnb =>
+        builder.ComplexProperty(v => v.FullName, fnb =>
         {
             fnb.Property(fn => fn.LastName)
                 .IsRequired()
@@ -39,7 +39,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 .HasColumnName("patronymic");
         });
 
-        builder.OwnsOne(v => v.Email, eb =>
+        builder.ComplexProperty(v => v.Email, eb =>
         {
             eb.Property(e => e.Value)
                 .IsRequired()
@@ -56,7 +56,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
             .IsRequired()
             .HasColumnName("years_of_experience");
         
-        builder.OwnsOne(v => v.PhoneNumber, pb =>
+        builder.ComplexProperty(v => v.PhoneNumber, pb =>
         {
             pb.Property(ph => ph.Value)
                 .IsRequired()

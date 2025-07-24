@@ -28,7 +28,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .HasMaxLength(LengthConstants.LENGTH100)
             .HasColumnName("nickname");
 
-        builder.OwnsOne(p => p.SpeciesBreed, sbb =>
+        builder.ComplexProperty(p => p.SpeciesBreed, sbb =>
         {
             sbb.Property(sb => sb.SpeciesId)
                     .IsRequired()
@@ -60,7 +60,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .HasMaxLength(LengthConstants.LENGTH1500)
             .HasColumnName("health_info");
 
-        builder.OwnsOne(p => p.Location, lb => 
+        builder.ComplexProperty(p => p.Location, lb => 
         {
             lb.Property(l => l.Country)
                 .IsRequired()
@@ -126,7 +126,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .IsRequired()
             .HasColumnName("height");
 
-        builder.OwnsOne(p => p.PhoneNumber, pb =>
+        builder.ComplexProperty(p => p.PhoneNumber, pb =>
         {
             pb.Property(ph => ph.Value)
                 .IsRequired()
@@ -146,7 +146,7 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
             .IsRequired()
             .HasColumnName("is_vaccinated");
 
-        builder.OwnsOne(p => p.HelpStatus, hsb =>
+        builder.ComplexProperty(p => p.HelpStatus, hsb =>
         {
             hsb.Property(hs => hs.Value)
                 .IsRequired()
