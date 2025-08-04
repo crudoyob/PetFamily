@@ -3,9 +3,10 @@ using CSharpFunctionalExtensions;
 
 namespace PetFamily.Domain.Shared.ValueObjects;
 
-public record PhoneNumber
+public sealed record PhoneNumber
 {
-    private const string PhoneRegexPattern = @"^\+?[0-9\s\-\(\)]{5,20}$";
+    
+    private const string PhoneRegexPattern = @"^\+\d{1,15}$";
     private static readonly Regex PhoneRegex = new(
         PhoneRegexPattern,
         RegexOptions.Compiled,
@@ -16,22 +17,16 @@ public record PhoneNumber
 
     private PhoneNumber(string value)
     {
-        Value = Regex.Replace(value, @"[^\d+]", "");
+        Value = value;
     }
 
-    public static Result<PhoneNumber, Error> Create(string value)
+    public static Result<PhoneNumber, Error> Create(string input)
     {
-        value = value?.Trim() ?? string.Empty;
+        var number = input.Trim();
 
-        if (string.IsNullOrWhiteSpace(value))
-            return Errors.General.ValueIsRequired("PhoneNumber");
-
-        if (!PhoneRegex.IsMatch(value))
+        if (!PhoneRegex.IsMatch(number))
             return Errors.General.ValueIsInvalid("PhoneNumber");
-
-        if (value.Length > LengthConstants.LENGTH100)
-            return Errors.General.ValueIsInvalid("PhoneNumber");
-
-        return new PhoneNumber(value);
+        
+        return new PhoneNumber(number);
     }
 }

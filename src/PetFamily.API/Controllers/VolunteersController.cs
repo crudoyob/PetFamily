@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetFamily.Api.Extensions;
-using PetFamily.Api.Extensions.VolunteerAggregate.Volunteers;
-using PetFamily.Application.Volunteers.CreateVolunteer;
-using PetFamily.Application.Volunteers.GetVolunteerById;
-using PetFamily.Contracts.Requests;
+using PetFamily.Application.VolunteerAggregate.CreateVolunteer;
+using PetFamily.Application.VolunteerAggregate.GetVolunteerById;
+using PetFamily.Contracts.Requests.VolunteerAggregate;
+using PetFamily.Domain.Shared.Ids;
 using PetFamily.Domain.VolunteerAggregate;
-using PetFamily.Domain.VolunteerAggregate.ValueObjects;
 
 namespace PetFamily.Api.Controllers;
 
@@ -19,13 +18,14 @@ public class VolunteersController : ApplicationController
         [FromRoute] GetVolunteerByIdRequest request, 
         CancellationToken cancellationToken)
     {
-        var volunteerId = VolunteerId.Create(request.VolunteerId);
-
         var command = request.ToCommand();
         
         var result = await handler.Handle(command, cancellationToken);
         
-        return result.ToResponse();
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+        
+        return Ok(result.Value);
     }   
     
     [HttpPost]
@@ -37,7 +37,10 @@ public class VolunteersController : ApplicationController
         var command = request.ToCommand();
         
         var result = await handler.Handle(command, cancellationToken);
-
-        return result.ToResponse();
+        
+        if (result.IsFailure)
+            return result.Error.ToResponse();
+       
+        return Ok(result.Value);
     }
 }

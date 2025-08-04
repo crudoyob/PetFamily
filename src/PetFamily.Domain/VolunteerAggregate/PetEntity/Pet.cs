@@ -1,39 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CSharpFunctionalExtensions;
+﻿using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Ids;
 using PetFamily.Domain.Shared.ValueObjects;
 using PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
 
 namespace PetFamily.Domain.VolunteerAggregate.PetEntity;
 
-public class Pet : EntityId<PetId>
+public sealed class Pet : EntityId<PetId>
 {
     private readonly List<HelpRequisite> _helpRequisites = new();
 
-    public Volunteer Volunteer { get; private set; }
-    public string Nickname { get; private set; }
-    public SpeciesBreed SpeciesBreed { get; private set; }
-    public string Description { get; private set; }
-    public string Color { get; private set; }
-    public string HealthInfo { get; private set; }
-    public Location Location { get; private set; }
+    public Volunteer Volunteer { get; private set; } = null!;
+    public string Nickname { get; private set; } = null!;
+    public SpeciesBreed SpeciesBreed { get; private set; } = null!;
+    public string Description { get; private set; } = null!;
+    public string Color { get; private set; } = null!;
+    public string HealthInfo { get; private set; } = null!;
+    public Location Location { get; private set; } = null!;
     public double Weight { get; private set; }
     public double Height { get; private set; }
-    public PhoneNumber PhoneNumber { get; private set; }
+    public PhoneNumber PhoneNumber { get; private set; } = null!;
     public bool IsNeutered { get; private set; }
     public DateOnly BirthDate { get; private set; }
     public bool IsVaccinated { get; private set; }
-    public HelpStatus HelpStatus { get; private set; }
+    public HelpStatus HelpStatus { get; private set; } = null!;
     public IReadOnlyList<HelpRequisite> HelpRequisites => _helpRequisites;
     public DateTime CreatedAt { get; private set; }
 
     private Pet(PetId id) : base(id) { }
 
-    private Pet(PetId id, string nickname, SpeciesBreed speciesBreed, string description, string color,
-        string healthInfo, Location location, double weight, double height, PhoneNumber phoneNumber, bool isNeutered,
-        DateOnly birthDate, bool isVaccinated, HelpStatus helpStatus) : base(id)
+    private Pet(
+        PetId id,
+        string nickname,
+        SpeciesBreed speciesBreed,
+        string description,
+        string color,
+        string healthInfo,
+        Location location,
+        double weight, 
+        double height,
+        PhoneNumber phoneNumber,
+        bool isNeutered,
+        DateOnly birthDate, 
+        bool isVaccinated, 
+        HelpStatus helpStatus
+        ) : base(id)
     {
         Nickname = nickname;
         SpeciesBreed = speciesBreed;
@@ -51,9 +62,21 @@ public class Pet : EntityId<PetId>
         CreatedAt = DateTime.UtcNow;
     }
 
-    public static Result<Pet, Error> Create(PetId id, string nickname, SpeciesBreed speciesBreed, string description,
-        string color, string healthInfo, Location location, double weight, double height, PhoneNumber phoneNumber,
-        bool isNeutered, DateOnly birthDate, bool isVaccinated, HelpStatus helpStatus)
+    public static Result<Pet, Error> Create(
+        PetId id,
+        string nickname,
+        SpeciesBreed speciesBreed,
+        string description,
+        string color, 
+        string healthInfo, 
+        Location location, 
+        double weight, 
+        double height, 
+        PhoneNumber phoneNumber,
+        bool isNeutered,
+        DateOnly birthDate, 
+        bool isVaccinated, 
+        HelpStatus helpStatus)
     {
         if (string.IsNullOrWhiteSpace(nickname))
             return Errors.General.ValueIsRequired("Nickname");
@@ -97,7 +120,19 @@ public class Pet : EntityId<PetId>
         if (birthDate > DateOnly.FromDateTime(DateTime.Today))
             return Errors.General.ValueIsInvalid("BirthDate");
 
-        return new Pet(id, nickname, speciesBreed, description, color, healthInfo, location, weight, height,
-            phoneNumber, isNeutered, birthDate, isVaccinated, helpStatus);
+        return new Pet(id,
+            nickname, 
+            speciesBreed,
+            description,
+            color, 
+            healthInfo, 
+            location, 
+            weight, 
+            height,
+            phoneNumber, 
+            isNeutered, 
+            birthDate, 
+            isVaccinated, 
+            helpStatus);
     }
 }

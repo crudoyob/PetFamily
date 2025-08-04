@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using PetFamily.Domain.SpeciesAggregate;
 using PetFamily.Domain.VolunteerAggregate;
 
-
 namespace PetFamily.Infrastructure;
 
 public class ApplicationDbContext(IConfiguration configuration): DbContext

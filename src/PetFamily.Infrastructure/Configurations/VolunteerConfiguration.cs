@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Ids;
 using PetFamily.Domain.VolunteerAggregate;
-using PetFamily.Domain.VolunteerAggregate.ValueObjects;
 
 namespace PetFamily.Infrastructure.Configurations;
 
@@ -54,6 +54,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
         
         builder.Property(v => v.YearsOfExperience)
             .IsRequired()
+            .HasMaxLength(LengthConstants.LENGTH100)
             .HasColumnName("years_of_experience");
         
         builder.ComplexProperty(v => v.PhoneNumber, pb =>

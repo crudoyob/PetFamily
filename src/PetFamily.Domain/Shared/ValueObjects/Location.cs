@@ -2,7 +2,7 @@
 
 namespace PetFamily.Domain.Shared.ValueObjects;
 
-public record Location
+public sealed record Location
 {
     public string Country { get; }
     public string Region { get; }
@@ -16,8 +16,18 @@ public record Location
     public string? Apartment { get; }
     public string? PostalCode { get; }
 
-    private Location(string country, string region, string city, string? district, string street, string building,
-        string? letter, string? corpus, string? construction, string? apartment, string? postalCode)
+    private Location(
+        string country,
+        string region,
+        string city,
+        string? district,
+        string street,
+        string building,
+        string? letter,
+        string? corpus,
+        string? construction,
+        string? apartment,
+        string? postalCode)
     {
         Country = country;
         Region = region;
@@ -32,9 +42,18 @@ public record Location
         PostalCode = postalCode;
     }
 
-    public static Result<Location, Error> Create(string country, string region, string city, string street, string building,
-        string? district = null, string? letter = null, string? corpus = null, string? construction = null,
-        string? apartment = null, string? postalCode = null)
+    public static Result<Location, Error> Create(
+        string country,
+        string region,
+        string city,
+        string street,
+        string building,
+        string? district = null,
+        string? letter = null,
+        string? corpus = null,
+        string? construction = null,
+        string? apartment = null,
+        string? postalCode = null)
     {
         if (string.IsNullOrWhiteSpace(country))
             return Errors.General.ValueIsRequired("Country");
@@ -79,7 +98,17 @@ public record Location
         if (postalCode != null && postalCode.Length > LengthConstants.LENGTH6)
             return Errors.General.ValueIsInvalid("PostalCode");
 
-        return new Location(country, region, city, district, street, building, letter, corpus, construction,
-            apartment, postalCode);
+        return new Location(
+            country,
+            region,
+            city,
+            district,
+            street,
+            building,
+            letter,
+            corpus,
+            construction,
+            apartment,
+            postalCode);
     }
 }

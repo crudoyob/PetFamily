@@ -1,10 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
-using PetFamily.Domain.SpeciesAggregate.BreedEntity.ValueObjects;
-using PetFamily.Domain.SpeciesAggregate.ValueObjects;
+using PetFamily.Domain.Shared.Ids;
 
 namespace PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
 
-public record SpeciesBreed
+public sealed record SpeciesBreed
 {
     public SpeciesId SpeciesId { get; }
     public BreedId BreedId { get; }

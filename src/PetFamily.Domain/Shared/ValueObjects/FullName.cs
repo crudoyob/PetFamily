@@ -1,9 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
-using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Shared.ValueObjects;
 
-public record FullName
+public sealed record FullName
 {
     public string LastName { get; }
     public string FirstName { get; }

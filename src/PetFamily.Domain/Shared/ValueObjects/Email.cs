@@ -1,10 +1,9 @@
 ﻿using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
-using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Shared.ValueObjects;
 
-public record Email
+public sealed record Email
 {
     private const string EmailRegexPattern = @"^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$";
     private static readonly Regex EmailRegex = new(
