@@ -1,6 +1,6 @@
 ﻿namespace PetFamily.Domain.Shared.Ids;
 
-public abstract class EntityId<TId>(TId id)
+public abstract class Entity<TId>(TId id)
     where TId : notnull
 {
     public TId Id { get; } = id;
@@ -10,7 +10,7 @@ public abstract class EntityId<TId>(TId id)
         if (obj == null || obj.GetType() != GetType())
             return false;
 
-        var other = (EntityId<TId>)obj;
+        var other = (Entity<TId>)obj;
         return ReferenceEquals(this, other) || Id.Equals(other.Id);
     }
 
@@ -19,7 +19,7 @@ public abstract class EntityId<TId>(TId id)
         return HashCode.Combine(GetType(), Id);
     }
 
-    public static bool operator ==(EntityId<TId>? left, EntityId<TId>? right)
+    public static bool operator ==(Entity<TId>? left, Entity<TId>? right)
     {
         if (ReferenceEquals(left, null) && ReferenceEquals(right, null))
             return true;
@@ -30,7 +30,7 @@ public abstract class EntityId<TId>(TId id)
         return left.Equals(right);
     }
 
-    public static bool operator !=(EntityId<TId>? left, EntityId<TId>? right)
+    public static bool operator !=(Entity<TId>? left, Entity<TId>? right)
     {
         return !(left == right);
     }

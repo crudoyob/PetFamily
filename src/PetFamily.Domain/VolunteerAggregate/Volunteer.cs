@@ -7,7 +7,7 @@ using PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
 
 namespace PetFamily.Domain.VolunteerAggregate;
 
-public sealed class Volunteer : EntityId<VolunteerId>
+public sealed class Volunteer : Shared.Ids.Entity<VolunteerId>
 {
     private readonly List<SocialNetwork> _socialNetworks = new();
     private readonly List<HelpRequisite> _helpRequisites = new();

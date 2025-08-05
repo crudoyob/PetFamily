@@ -2,9 +2,13 @@
 
 namespace PetFamily.Domain.Shared;
 
-public class ErrorList(IEnumerable<Error> errors) : IEnumerable<Error>
+public class ErrorList: IEnumerable<Error>
 {
-    private readonly List<Error> _errors = errors.ToList();
+    private readonly List<Error> _errors = new();
+    public ErrorList(IEnumerable<Error> errors)
+    {
+        _errors = errors.ToList();
+    }
     
     public IEnumerator<Error> GetEnumerator()
     {
