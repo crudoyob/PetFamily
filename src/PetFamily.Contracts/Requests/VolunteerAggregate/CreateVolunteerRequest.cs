@@ -1,7 +1,7 @@
 ﻿using PetFamily.Contracts.Dtos;
-using PetFamily.Contracts.Dtos.VolunterAggregate.VolunteerEntity;
+using PetFamily.Contracts.Dtos.VolunterAggregate;
 
-namespace PetFamily.Contracts.Requests;
+namespace PetFamily.Contracts.Requests.VolunteerAggregate;
 
 public record CreateVolunteerRequest(
     FullNameDto FullName,
@@ -11,3 +11,5 @@ public record CreateVolunteerRequest(
     string PhoneNumber,
     IEnumerable<SocialNetworkDto> SocialNetworks,
     IEnumerable<HelpRequisiteDto> HelpRequisites);
+    
+    

@@ -1,4 +1,4 @@
-﻿namespace PetFamily.Contracts.Dtos.VolunterAggregate.VolunteerEntity;
+﻿namespace PetFamily.Contracts.Dtos.VolunterAggregate;
 
 public record FullNameDto(
     string LastName,

@@ -1,31 +1,37 @@
 ﻿using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Ids;
 using PetFamily.Domain.Shared.ValueObjects;
 using PetFamily.Domain.VolunteerAggregate.PetEntity;
 using PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
-using PetFamily.Domain.VolunteerAggregate.ValueObjects;
 
 namespace PetFamily.Domain.VolunteerAggregate;
 
-public sealed class Volunteer : EntityId<VolunteerId>
+public sealed class Volunteer : Shared.Ids.Entity<VolunteerId>
 {
     private readonly List<SocialNetwork> _socialNetworks = new();
     private readonly List<HelpRequisite> _helpRequisites = new();
     private readonly List<Pet> _pets = new();
 
-    public FullName FullName { get; private set; }
-    public Email Email { get; private set; }
-    public string Description { get; private set; }
+    public FullName FullName { get; private set; } = null!;
+    public Email Email { get; private set; } = null!;
+    public string Description { get; private set; } = null!;
     public int YearsOfExperience { get; private set; }
-    public PhoneNumber PhoneNumber { get; private set; }
+    public PhoneNumber PhoneNumber { get; private set; } = null!;
     public IReadOnlyList<SocialNetwork> SocialNetworks => _socialNetworks;
     public IReadOnlyList<HelpRequisite> HelpRequisites => _helpRequisites;
     public IReadOnlyList<Pet> Pets => _pets;
 
     private Volunteer(VolunteerId id) : base(id) { }
 
-    private Volunteer(VolunteerId id, FullName fullName, Email email, string description,
-        PhoneNumber phoneNumber, int yearsOfExperience = 0) : base(id)
+    private Volunteer(
+        VolunteerId id,
+        FullName fullName,
+        Email email,
+        string description,
+        PhoneNumber phoneNumber,
+        int yearsOfExperience = 0
+        ) : base(id)
     {
         FullName = fullName;
         Email = email;
@@ -42,8 +48,13 @@ public sealed class Volunteer : EntityId<VolunteerId>
     public int NumberOfPetsLookingForHome => CountLookingForHomePets();
     public int NumberOfPetsNeedsHelp => CountNeedsHelpPets();
 
-    public static Result<Volunteer, Error> Create(VolunteerId id, FullName fullName, Email email, string description,
-        PhoneNumber phoneNumber, int yearsOfExperience = 0)
+    public static Result<Volunteer, Error> Create(
+        VolunteerId id,
+        FullName fullName,
+        Email email,
+        string description,
+        PhoneNumber phoneNumber,
+        int yearsOfExperience = 0)
     {
         if (string.IsNullOrWhiteSpace(description))
             return Errors.General.ValueIsRequired("Description");
@@ -54,6 +65,12 @@ public sealed class Volunteer : EntityId<VolunteerId>
         if (yearsOfExperience < 0)
             return Errors.General.ValueIsInvalid("YearsOfExperience");
 
-        return new Volunteer(id, fullName, email, description, phoneNumber, yearsOfExperience);
+        return new Volunteer(
+            id,
+            fullName,
+            email,
+            description,
+            phoneNumber,
+            yearsOfExperience);
     }
 }

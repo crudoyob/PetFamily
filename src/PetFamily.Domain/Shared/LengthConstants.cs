@@ -2,6 +2,7 @@
 
 public readonly struct LengthConstants
 {
+    public const int LENGTH0 = 0;
     public const int LENGTH1 = 1;
     public const int LENGTH2 = 2;
     public const int LENGTH5 = 5;

@@ -1,4 +1,4 @@
-﻿namespace PetFamily.Domain.VolunteerAggregate.ValueObjects;
+﻿namespace PetFamily.Domain.Shared.Ids;
 
 public record VolunteerId
 {

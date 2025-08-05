@@ -2,7 +2,7 @@
 
 namespace PetFamily.Domain.Shared.ValueObjects;
 
-public record HelpRequisite
+public sealed record HelpRequisite
 {
     public string Name { get; }
     public string Description { get; }

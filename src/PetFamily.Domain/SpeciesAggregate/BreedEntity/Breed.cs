@@ -1,12 +1,12 @@
 ﻿using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
-using PetFamily.Domain.SpeciesAggregate.BreedEntity.ValueObjects;
+using PetFamily.Domain.Shared.Ids;
 
 namespace PetFamily.Domain.SpeciesAggregate.BreedEntity;
 
-public class Breed : EntityId<BreedId>
+public sealed class Breed : Shared.Ids.Entity<BreedId>
 {
-    public string Name { get; private set; }
+    public string Name { get; private set; } = null!;
 
     private Breed(BreedId id) : base(id) { }
 

@@ -1,4 +1,4 @@
-﻿namespace PetFamily.Domain.SpeciesAggregate.BreedEntity.ValueObjects;
+﻿namespace PetFamily.Domain.Shared.Ids;
 
 public record BreedId
 {

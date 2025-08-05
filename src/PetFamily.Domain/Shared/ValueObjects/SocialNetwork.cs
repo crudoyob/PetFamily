@@ -1,9 +1,8 @@
 ﻿using CSharpFunctionalExtensions;
-using PetFamily.Domain.Shared;
 
 namespace PetFamily.Domain.Shared.ValueObjects;
 
-public record SocialNetwork
+public sealed record SocialNetwork
 {
     public string Name { get; }
     public string Url { get; }
