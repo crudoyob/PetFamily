@@ -6,7 +6,7 @@ using PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
 
 namespace PetFamily.Domain.VolunteerAggregate.PetEntity;
 
-public sealed class Pet : Shared.Ids.Entity<PetId>
+public sealed class Pet : Shared.Entity<PetId>
 {
     private readonly List<HelpRequisite> _helpRequisites = new();
 

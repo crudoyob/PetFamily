@@ -4,7 +4,7 @@ using PetFamily.Domain.Shared.Ids;
 
 namespace PetFamily.Domain.SpeciesAggregate.BreedEntity;
 
-public sealed class Breed : Shared.Ids.Entity<BreedId>
+public sealed class Breed : Shared.Entity<BreedId>
 {
     public string Name { get; private set; } = null!;
 
