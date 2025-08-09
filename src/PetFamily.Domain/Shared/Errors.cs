@@ -4,6 +4,11 @@ public static class Errors
 {
     public static class General
     {
+        public static Error Unexcepted(string message)
+        {
+            return Error.Failure("server.internal", message);
+        }
+        
         public static Error ValueIsInvalid(string? name = null)
         {
             var label = name ?? "value";

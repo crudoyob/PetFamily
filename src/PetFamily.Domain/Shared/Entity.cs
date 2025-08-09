@@ -1,4 +1,4 @@
-﻿namespace PetFamily.Domain.Shared.Ids;
+﻿namespace PetFamily.Domain.Shared;
 
 public abstract class Entity<TId>(TId id)
     where TId : notnull
