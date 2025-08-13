@@ -7,10 +7,12 @@ public readonly struct LengthConstants
     public const int LENGTH2 = 2;
     public const int LENGTH5 = 5;
     public const int LENGTH6 = 6;
+    public const int LENGTH7 = 7;
     public const int LENGTH10 = 10;
     public const int LENGTH25 = 25;
     public const int LENGTH50 = 50;
     public const int LENGTH100 = 100;
+    public const int LENGTH150 = 150;
     public const int LENGTH250 = 250;
     public const int LENGTH500 = 500;
     public const int LENGTH1000 = 1000;

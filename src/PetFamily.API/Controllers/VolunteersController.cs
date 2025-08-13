@@ -3,7 +3,6 @@ using PetFamily.Api.Extensions;
 using PetFamily.Application.VolunteerAggregate.CreateVolunteer;
 using PetFamily.Application.VolunteerAggregate.GetVolunteerById;
 using PetFamily.Contracts.Requests.VolunteerAggregate;
-using PetFamily.Domain.Shared.Ids;
 using PetFamily.Domain.VolunteerAggregate;
 
 namespace PetFamily.Api.Controllers;

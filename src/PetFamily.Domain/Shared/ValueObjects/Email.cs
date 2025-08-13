@@ -19,19 +19,19 @@ public sealed record Email
         Value = value.ToLowerInvariant();
     }
 
-    public static Result<Email, Error> Create(string value)
+    public static Result<Email, Error> Create(string input)
     {
-        value = value?.Trim() ?? string.Empty;
+        var email = input?.Trim() ?? string.Empty;
 
-        if (string.IsNullOrWhiteSpace(value))
+        if (string.IsNullOrWhiteSpace(email))
             return Errors.General.ValueIsRequired("Email");
 
-        if (!EmailRegex.IsMatch(value))
+        if (!EmailRegex.IsMatch(email))
             return Errors.General.ValueIsInvalid("Email");
 
-        if (value.Length > LengthConstants.LENGTH100)
+        if (email.Length > LengthConstants.LENGTH100)
             return Errors.General.ValueIsInvalid("Email");
 
-        return new Email(value);
+        return new Email(email);
     }
 }

@@ -22,11 +22,11 @@ public sealed record PhoneNumber
 
     public static Result<PhoneNumber, Error> Create(string input)
     {
-        var number = input.Trim();
+        var phoneNumber = input.Trim();
 
-        if (!PhoneRegex.IsMatch(number))
+        if (!PhoneRegex.IsMatch(phoneNumber))
             return Errors.General.ValueIsInvalid("PhoneNumber");
         
-        return new PhoneNumber(number);
+        return new PhoneNumber(phoneNumber);
     }
 }
