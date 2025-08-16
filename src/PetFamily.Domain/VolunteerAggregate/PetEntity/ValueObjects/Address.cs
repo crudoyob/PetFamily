@@ -1,6 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
 
-namespace PetFamily.Domain.Shared.ValueObjects;
+namespace PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
 
 public sealed record Address
 {

@@ -65,4 +65,32 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
             phoneNumber,
             yearsOfExperience);
     }
+
+    public void UpdateMainInfo(
+        FullName fullName,
+        Email email,
+        Description description,
+        YearsOfExperience yearsOfExperience,
+        PhoneNumber phoneNumber)
+    {
+        FullName = fullName;
+        Email = email;
+        Description = description;
+        YearsOfExperience = yearsOfExperience;
+        PhoneNumber = phoneNumber;
+    }
+    
+    public void UpdateSocialNetworks(
+        IEnumerable<SocialNetwork> socialNetworks)
+    {
+        _socialNetworks.Clear();
+        _socialNetworks.AddRange(socialNetworks);
+    }
+    
+    public void UpdateHelpRequisites(
+        IEnumerable<HelpRequisite> helpRequisites)
+    {
+        _helpRequisites.Clear();
+        _helpRequisites.AddRange(helpRequisites);
+    }
 }

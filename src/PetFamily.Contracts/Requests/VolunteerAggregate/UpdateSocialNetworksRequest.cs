@@ -2,5 +2,5 @@
 
 namespace PetFamily.Contracts.Requests.VolunteerAggregate;
 
-public record UpdateMainInfoVolunteerRequest(
-    FullNameDto FullName);
+public record UpdateSocialNetworksRequest(
+    IEnumerable<SocialNetworkDto> SocialNetworks);

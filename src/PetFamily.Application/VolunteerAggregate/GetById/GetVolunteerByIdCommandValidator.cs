@@ -1,8 +1,9 @@
 ﻿using FluentValidation;
 using PetFamily.Application.Validation;
+using PetFamily.Application.VolunteerAggregate.GetVolunteerById;
 using PetFamily.Domain.Shared;
 
-namespace PetFamily.Application.VolunteerAggregate.GetVolunteerById;
+namespace PetFamily.Application.VolunteerAggregate.GetById;
 
 public class GetVolunteerByIdCommandValidator : AbstractValidator<GetVolunteerByIdCommand>
 {

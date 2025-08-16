@@ -2,14 +2,13 @@
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetFamily.Application.Extensions;
-using PetFamily.Application.Volunteers;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Ids;
 using PetFamily.Domain.Shared.ValueObjects;
 using PetFamily.Domain.VolunteerAggregate;
 using PetFamily.Domain.VolunteerAggregate.ValueObjects;
 
-namespace PetFamily.Application.VolunteerAggregate.CreateVolunteer;
+namespace PetFamily.Application.VolunteerAggregate.Create;
 
 public class CreateVolunteerHandler
 {
@@ -57,7 +56,9 @@ public class CreateVolunteerHandler
 
         var description = Description.Create(command.Request.Description).Value;
 
-        var yearsOfExperience = YearsOfExperience.Create(command.Request.YearsOfExperience).Value;
+        var yearsOfExperience = YearsOfExperience.Create(
+            command.Request.YearsOfExperience.Years,
+            command.Request.YearsOfExperience.IsVerified).Value;
 
         var phoneNumber = PhoneNumber.Create(command.Request.PhoneNumber).Value;
         var volunteerByPhoneNumber = await _volunteerRepository.GetByPhoneNumber(phoneNumber, cancellationToken);

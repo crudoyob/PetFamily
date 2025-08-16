@@ -2,36 +2,38 @@
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetFamily.Application.Extensions;
+using PetFamily.Application.VolunteerAggregate.UpdateSocialNetworks;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Ids;
 using PetFamily.Domain.Shared.ValueObjects;
 
-namespace PetFamily.Application.VolunteerAggregate.UpdateSocialNetworks;
+namespace PetFamily.Application.VolunteerAggregate.UpdateHelpRequisites;
 
-public class UpdateSocialNetworksHandler
+public class UpdateHelpRequisitesHandler
 {
     private readonly IVolunteerRepository _volunteerRepository;
-    private readonly IValidator<UpdateSocialNetworksCommand> _validator;
-    private readonly ILogger<UpdateSocialNetworksHandler> _logger;
+    private readonly IValidator<UpdateHelpRequisitesCommand> _validator;
+    private readonly ILogger<UpdateHelpRequisitesHandler> _logger;
 
-    public UpdateSocialNetworksHandler(
+    public UpdateHelpRequisitesHandler(
         IVolunteerRepository volunteersRepository,
-        IValidator<UpdateSocialNetworksCommand> validator,
-        ILogger<UpdateSocialNetworksHandler> logger)
+        IValidator<UpdateHelpRequisitesCommand> validator,
+        ILogger<UpdateHelpRequisitesHandler> logger)
     {
         _volunteerRepository = volunteersRepository;
         _validator = validator;
         _logger = logger;
     }
+    
     public async Task<Result<Guid, ErrorList>> Handle(
-        UpdateSocialNetworksCommand command,
+        UpdateHelpRequisitesCommand command,
         CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(command, cancellationToken);
         
         if (!validationResult.IsValid)
         {
-            _logger.LogWarning("Validation failed for UpdateSocialNetworksCommand. Errors: {@Errors}",
+            _logger.LogWarning("Validation failed for UpdateHelpRequisitesCommand. Errors: {@Errors}",
                 validationResult.Errors.Select(e => e.ErrorMessage));
             return validationResult.ToErrorList();
         }
@@ -46,18 +48,18 @@ public class UpdateSocialNetworksHandler
             return volunteerResult.Error.ToErrorList();
         }
         
-        var socialNetworks = new List<SocialNetwork>(command.Request.SocialNetworks.Count());
+        var helpRequisites = new List<HelpRequisite>(command.Request.HelpRequisites.Count());
 
-        socialNetworks.AddRange(from s in command.Request.SocialNetworks
-            let socialResult = SocialNetwork.Create(s.Name, s.Url)
-            select socialResult.Value);
+        helpRequisites.AddRange(from s in command.Request.HelpRequisites
+            let helpRequisite = HelpRequisite.Create(s.Name, s.Description)
+            select helpRequisite.Value);
 
-        volunteerResult.Value.UpdateSocialNetworks(socialNetworks);
+        volunteerResult.Value.UpdateHelpRequisites(helpRequisites);
 
-        _logger.LogInformation("The volunteer's social networks with ID {VolunteerId}" +
-                               " have been successfully updated. Social networks: {@SocialNetworks}",
+        _logger.LogInformation("The volunteer's help requisites with ID {VolunteerId}" +
+                               " have been successfully updated. Help requisites: {@HelpRequisites}",
             volunteerId,
-            socialNetworks.Select(s => new { s.Name, s.Url }));
+            helpRequisites.Select(s => new { s.Name, s.Description }));
         
         var result = await _volunteerRepository.Save(volunteerResult.Value, cancellationToken);
         

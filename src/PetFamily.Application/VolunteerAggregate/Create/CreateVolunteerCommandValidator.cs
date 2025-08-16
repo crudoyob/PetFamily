@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
 using PetFamily.Application.Validation;
-using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.ValueObjects;
+using PetFamily.Domain.VolunteerAggregate.ValueObjects;
 
-namespace PetFamily.Application.VolunteerAggregate.CreateVolunteer;
+namespace PetFamily.Application.VolunteerAggregate.Create;
 
 public class CreateVolunteerCommandValidator : AbstractValidator<CreateVolunteerCommand>
 {
@@ -16,15 +16,12 @@ public class CreateVolunteerCommandValidator : AbstractValidator<CreateVolunteer
         
         RuleFor(c => c.Request.Email).MustBeValueObject(Email.Create);
 
-        RuleFor(c => c.Request.Description)
-            .MaximumLength(LengthConstants.LENGTH1500)
-            .WithError(Errors.General.ValueIsInvalid("description"));
-        
-        RuleFor(c => c.Request.YearsOfExperience)
-            .GreaterThanOrEqualTo(LengthConstants.LENGTH0)
-            .WithError(Errors.General.ValueIsInvalid("experienceYears"))
-            .LessThanOrEqualTo(LengthConstants.LENGTH100)
-            .WithError(Errors.General.ValueIsInvalid("experienceYears"));
+        RuleFor(c => c.Request.Description).MustBeValueObject(Description.Create);
+
+        RuleFor(c => c.Request.YearsOfExperience).MustBeValueObject(
+            ye => YearsOfExperience.Create(
+                ye.Years,
+                ye.IsVerified));
         
         RuleFor(c => c.Request.PhoneNumber).MustBeValueObject(PhoneNumber.Create);
 

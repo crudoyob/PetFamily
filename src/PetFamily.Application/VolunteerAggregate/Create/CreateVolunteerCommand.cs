@@ -1,6 +1,6 @@
 ﻿using PetFamily.Contracts.Requests.VolunteerAggregate;
 
-namespace PetFamily.Application.VolunteerAggregate.CreateVolunteer;
+namespace PetFamily.Application.VolunteerAggregate.Create;
 
 public record CreateVolunteerCommand(CreateVolunteerRequest Request);
 

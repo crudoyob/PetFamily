@@ -1,6 +1,14 @@
-﻿namespace PetFamily.Application.VolunteerAggregate.UpdateSocialNetworks;
+﻿using FluentValidation;
+using PetFamily.Application.Validation;
+using PetFamily.Domain.Shared.ValueObjects;
 
-public class UpdateSocialNetworksValidator
+namespace PetFamily.Application.VolunteerAggregate.UpdateSocialNetworks;
+
+public class UpdateSocialNetworksValidator : AbstractValidator<UpdateSocialNetworksCommand>
 {
-    
+    public UpdateSocialNetworksValidator()
+    {
+        RuleForEach(u => u.Request.SocialNetworks)
+            .MustBeValueObject(sn => SocialNetwork.Create(sn.Name, sn.Url));
+    }
 }
