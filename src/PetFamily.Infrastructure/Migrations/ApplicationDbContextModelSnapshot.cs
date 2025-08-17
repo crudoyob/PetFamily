@@ -78,6 +78,14 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deletion_date");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
+
                     b.Property<Guid>("volunteer_id")
                         .HasColumnType("uuid");
 
@@ -269,6 +277,18 @@ namespace PetFamily.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletionDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("deletion_date");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_deleted");
+
                     b.ComplexProperty<Dictionary<string, object>>("Description", "PetFamily.Domain.VolunteerAggregate.Volunteer.Description#Description", b1 =>
                         {
                             b1.IsRequired();
@@ -333,7 +353,7 @@ namespace PetFamily.Infrastructure.Migrations
                                 .HasColumnType("boolean")
                                 .HasColumnName("is_verified");
 
-                            b1.Property<int>("Value")
+                            b1.Property<int>("Years")
                                 .HasColumnType("integer")
                                 .HasColumnName("years_of_experience");
                         });
@@ -475,6 +495,7 @@ namespace PetFamily.Infrastructure.Migrations
                                 .HasColumnType("integer");
 
                             b1.Property<string>("Description")
+                                .IsRequired()
                                 .ValueGeneratedOnUpdateSometimes()
                                 .HasMaxLength(250)
                                 .HasColumnType("character varying(250)")

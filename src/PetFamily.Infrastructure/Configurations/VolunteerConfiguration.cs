@@ -34,7 +34,6 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 .HasColumnName("first_name");
             
             fnb.Property(fn => fn.Patronymic)
-                .IsRequired(false)
                 .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("patronymic");
         });
@@ -73,6 +72,16 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("phone_number");
         });
+        
+        builder.Property(v => v.IsDeleted)
+            .HasColumnName("is_deleted");
+        
+        builder.Property(v => v.DeletionDate)
+            .HasColumnName("deletion_date");
+        
+        builder.Property(v => v.CreatedAt)
+            .IsRequired()
+            .HasColumnName("created_at");
 
         builder.OwnsMany(v => v.SocialNetworks, snb =>
         {
@@ -99,7 +108,7 @@ public class VolunteerConfiguration : IEntityTypeConfiguration<Volunteer>
                 .HasColumnName("name");
 
             hrb.Property(hr => hr.Description)
-                .IsRequired(false)
+                .IsRequired()
                 .HasMaxLength(LengthConstants.LENGTH250)
                 .HasColumnName("description");
         });

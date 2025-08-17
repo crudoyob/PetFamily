@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared.Errors;
 
 namespace PetFamily.Domain.Shared.ValueObjects;
 
@@ -16,16 +17,16 @@ public sealed record HelpRequisite
     public static Result<HelpRequisite, Error> Create(string name, string description)
     {
         if (string.IsNullOrWhiteSpace(name))
-            return Errors.General.ValueIsRequired("Name");
+            return Errors.Errors.General.ValueIsRequired("Name");
 
         if (name.Length > LengthConstants.LENGTH100)
-            return Errors.General.ValueIsInvalid("Name");
+            return Errors.Errors.General.ValueIsInvalid("Name");
 
         if (string.IsNullOrWhiteSpace(description))
-            return Errors.General.ValueIsRequired("Description");
+            return Errors.Errors.General.ValueIsRequired("Description");
 
         if (description.Length > LengthConstants.LENGTH250)
-            return Errors.General.ValueIsInvalid("Description");
+            return Errors.Errors.General.ValueIsInvalid("Description");
 
         return new HelpRequisite(name, description);
     }

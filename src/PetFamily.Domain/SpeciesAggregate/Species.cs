@@ -5,7 +5,7 @@ using PetFamily.Domain.SpeciesAggregate.BreedEntity;
 
 namespace PetFamily.Domain.SpeciesAggregate;
 
-public sealed class Species : Shared.Entity<SpeciesId>
+public sealed class Species : Shared.BaseEntity<SpeciesId>
 {
     private readonly List<Breed> _breeds = new();
 

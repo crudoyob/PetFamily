@@ -115,7 +115,6 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                 .HasColumnName("city");
             
             lb.Property(l => l.District)
-                .IsRequired(false)
                 .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("district");
             
@@ -130,27 +129,22 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
                 .HasColumnName("building");
             
             lb.Property(l => l.Letter)
-                .IsRequired(false)
                 .HasMaxLength(LengthConstants.LENGTH1)
                 .HasColumnName("letter");
             
             lb.Property(l => l.Corpus)
-                .IsRequired(false)
                 .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("corpus");
             
             lb.Property(l => l.Construction)
-                .IsRequired(false)
                 .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("construction");
             
             lb.Property(l => l.Apartment)
-                .IsRequired(false)
                 .HasMaxLength(LengthConstants.LENGTH100)
                 .HasColumnName("apartment");
             
             lb.Property(l => l.PostalCode)
-                .IsRequired(false)
                 .HasMaxLength(LengthConstants.LENGTH6)
                 .HasColumnName("postal_code");
         });
@@ -207,5 +201,11 @@ public class PetConfiguration : IEntityTypeConfiguration<Pet>
         builder.Property(p => p.CreatedAt)
             .IsRequired()
             .HasColumnName("created_at");
+        
+        builder.Property(p => p.IsDeleted)
+            .HasColumnName("is_deleted");
+        
+        builder.Property(p => p.DeletionDate)
+            .HasColumnName("deletion_date");
     }
 }
