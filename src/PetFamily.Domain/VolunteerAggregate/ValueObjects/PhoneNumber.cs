@@ -1,7 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
 
-namespace PetFamily.Domain.Shared.ValueObjects;
+namespace PetFamily.Domain.VolunteerAggregate.ValueObjects;
 
 public sealed record PhoneNumber
 {
@@ -22,11 +23,11 @@ public sealed record PhoneNumber
 
     public static Result<PhoneNumber, Error> Create(string input)
     {
-        var number = input.Trim();
+        var phoneNumber = input.Trim();
 
-        if (!PhoneRegex.IsMatch(number))
+        if (!PhoneRegex.IsMatch(phoneNumber))
             return Errors.General.ValueIsInvalid("PhoneNumber");
         
-        return new PhoneNumber(number);
+        return new PhoneNumber(phoneNumber);
     }
 }

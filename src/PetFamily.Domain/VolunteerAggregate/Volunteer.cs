@@ -4,6 +4,7 @@ using PetFamily.Domain.Shared.Ids;
 using PetFamily.Domain.Shared.ValueObjects;
 using PetFamily.Domain.VolunteerAggregate.PetEntity;
 using PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
+using PetFamily.Domain.VolunteerAggregate.ValueObjects;
 
 namespace PetFamily.Domain.VolunteerAggregate;
 
@@ -15,8 +16,8 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
 
     public FullName FullName { get; private set; } = null!;
     public Email Email { get; private set; } = null!;
-    public string Description { get; private set; } = null!;
-    public int YearsOfExperience { get; private set; }
+    public Description Description { get; private set; } = null!;
+    public YearsOfExperience YearsOfExperience { get; private set; } = null!;
     public PhoneNumber PhoneNumber { get; private set; } = null!;
     public IReadOnlyList<SocialNetwork> SocialNetworks => _socialNetworks;
     public IReadOnlyList<HelpRequisite> HelpRequisites => _helpRequisites;
@@ -28,9 +29,9 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
         VolunteerId id,
         FullName fullName,
         Email email,
-        string description,
+        Description description,
         PhoneNumber phoneNumber,
-        int yearsOfExperience = 0
+        YearsOfExperience yearsOfExperience
         ) : base(id)
     {
         FullName = fullName;
@@ -52,19 +53,10 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
         VolunteerId id,
         FullName fullName,
         Email email,
-        string description,
+        Description description,
         PhoneNumber phoneNumber,
-        int yearsOfExperience = 0)
+        YearsOfExperience yearsOfExperience)
     {
-        if (string.IsNullOrWhiteSpace(description))
-            return Errors.General.ValueIsRequired("Description");
-
-        if (description.Length > LengthConstants.LENGTH1500)
-            return Errors.General.ValueIsInvalid("Description");
-
-        if (yearsOfExperience < 0)
-            return Errors.General.ValueIsInvalid("YearsOfExperience");
-
         return new Volunteer(
             id,
             fullName,
@@ -72,5 +64,33 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
             description,
             phoneNumber,
             yearsOfExperience);
+    }
+
+    public void UpdateMainInfo(
+        FullName fullName,
+        Email email,
+        Description description,
+        YearsOfExperience yearsOfExperience,
+        PhoneNumber phoneNumber)
+    {
+        FullName = fullName;
+        Email = email;
+        Description = description;
+        YearsOfExperience = yearsOfExperience;
+        PhoneNumber = phoneNumber;
+    }
+    
+    public void UpdateSocialNetworks(
+        IEnumerable<SocialNetwork> socialNetworks)
+    {
+        _socialNetworks.Clear();
+        _socialNetworks.AddRange(socialNetworks);
+    }
+    
+    public void UpdateHelpRequisites(
+        IEnumerable<HelpRequisite> helpRequisites)
+    {
+        _helpRequisites.Clear();
+        _helpRequisites.AddRange(helpRequisites);
     }
 }

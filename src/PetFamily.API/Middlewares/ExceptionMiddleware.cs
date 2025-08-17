@@ -34,7 +34,6 @@ public class ExceptionMiddleware
     }
 }
 
-
 public static class ExceptionMiddlewareExtensions
 {
     public static IApplicationBuilder UseExceptionMiddleware(

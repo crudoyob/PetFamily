@@ -1,8 +1,9 @@
 ﻿using CSharpFunctionalExtensions;
+using PetFamily.Domain.Shared;
 
-namespace PetFamily.Domain.Shared.ValueObjects;
+namespace PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
 
-public sealed record Location
+public sealed record Address
 {
     public string Country { get; }
     public string Region { get; }
@@ -16,7 +17,7 @@ public sealed record Location
     public string? Apartment { get; }
     public string? PostalCode { get; }
 
-    private Location(
+    private Address(
         string country,
         string region,
         string city,
@@ -42,7 +43,7 @@ public sealed record Location
         PostalCode = postalCode;
     }
 
-    public static Result<Location, Error> Create(
+    public static Result<Address, Error> Create(
         string country,
         string region,
         string city,
@@ -98,7 +99,7 @@ public sealed record Location
         if (postalCode != null && postalCode.Length > LengthConstants.LENGTH6)
             return Errors.General.ValueIsInvalid("PostalCode");
 
-        return new Location(
+        return new Address(
             country,
             region,
             city,

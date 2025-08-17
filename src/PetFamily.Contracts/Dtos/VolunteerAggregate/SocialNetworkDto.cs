@@ -1,4 +1,4 @@
-﻿namespace PetFamily.Contracts.Dtos.VolunterAggregate;
+﻿namespace PetFamily.Contracts.Dtos.VolunteerAggregate;
 
 public record SocialNetworkDto(
     string Name,
