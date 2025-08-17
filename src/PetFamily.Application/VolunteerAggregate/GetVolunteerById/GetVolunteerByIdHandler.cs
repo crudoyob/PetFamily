@@ -2,13 +2,12 @@
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetFamily.Application.Extensions;
-using PetFamily.Application.VolunteerAggregate.Create;
-using PetFamily.Application.VolunteerAggregate.GetVolunteerById;
+using PetFamily.Application.VolunteerAggregate.CreateVolunteer;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Ids;
 using PetFamily.Domain.VolunteerAggregate;
 
-namespace PetFamily.Application.VolunteerAggregate.GetById;
+namespace PetFamily.Application.VolunteerAggregate.GetVolunteerById;
 
 public class GetVolunteerByIdHandler
 {

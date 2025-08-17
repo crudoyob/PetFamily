@@ -17,7 +17,7 @@ public sealed class Volunteer : Shared.Entity<VolunteerId>
     public FullName FullName { get; private set; } = null!;
     public Email Email { get; private set; } = null!;
     public Description Description { get; private set; } = null!;
-    public YearsOfExperience YearsOfExperience { get; private set; }
+    public YearsOfExperience YearsOfExperience { get; private set; } = null!;
     public PhoneNumber PhoneNumber { get; private set; } = null!;
     public IReadOnlyList<SocialNetwork> SocialNetworks => _socialNetworks;
     public IReadOnlyList<HelpRequisite> HelpRequisites => _helpRequisites;

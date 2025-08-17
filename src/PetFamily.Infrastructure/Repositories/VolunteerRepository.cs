@@ -1,6 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
-using PetFamily.Application.VolunteerAggregate;
+using PetFamily.Application;
 using PetFamily.Domain.Shared;
 using PetFamily.Domain.Shared.Ids;
 using PetFamily.Domain.VolunteerAggregate;
@@ -63,11 +63,18 @@ public class VolunteerRepository : IVolunteerRepository
         return volunteer;
     }
 
-    public async Task<Guid> Save(Volunteer volunteer, CancellationToken cancellationToken)
+    public async Task<Result<Guid, ErrorList>> Save(Volunteer volunteer, CancellationToken cancellationToken)
     {
-        _dbContext.Attach(volunteer);
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        try
+        {
+            _dbContext.Attach(volunteer);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         
-        return volunteer.Id;
+            return (Guid) volunteer.Id;
+        }
+        catch (Exception ex)
+        {
+            return Errors.General.Unexcepted(ex.Message).ToErrorList();
+        }
     }
 }

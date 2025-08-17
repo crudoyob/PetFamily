@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetFamily.Api.Extensions;
-using PetFamily.Application.VolunteerAggregate.Create;
-using PetFamily.Application.VolunteerAggregate.GetById;
+using PetFamily.Application.VolunteerAggregate.CreateVolunteer;
 using PetFamily.Application.VolunteerAggregate.GetVolunteerById;
 using PetFamily.Application.VolunteerAggregate.UpdateHelpRequisites;
 using PetFamily.Application.VolunteerAggregate.UpdateMainInfo;
