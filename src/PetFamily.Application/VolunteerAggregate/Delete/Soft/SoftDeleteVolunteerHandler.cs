@@ -2,7 +2,6 @@
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using PetFamily.Application.Extensions;
-using PetFamily.Application.VolunteerAggregate.Delete.Hard;
 using PetFamily.Domain.Shared.Errors;
 using PetFamily.Domain.Shared.Ids;
 
@@ -32,7 +31,7 @@ public class SoftDeleteVolunteerHandler
 
         if (!validationResult.IsValid)
         {
-            _logger.LogWarning("Validation failed for HardDeleteVolunteerCommand. Errors: {@Errors}",
+            _logger.LogWarning("Validation failed for SoftDeleteVolunteerCommand. Errors: {@Errors}",
                 validationResult.Errors.Select(e => e.ErrorMessage));
             return validationResult.ToErrorList();
         }
