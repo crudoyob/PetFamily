@@ -1,10 +1,11 @@
 ﻿using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Errors;
 using PetFamily.Domain.Shared.Ids;
 
 namespace PetFamily.Domain.SpeciesAggregate.BreedEntity;
 
-public sealed class Breed : Shared.Entity<BreedId>
+public sealed class Breed : Shared.BaseEntity<BreedId>
 {
     public string Name { get; private set; } = null!;
 

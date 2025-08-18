@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetFamily.Contracts.Response;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Errors;
 
 namespace PetFamily.Api.Extensions;
 

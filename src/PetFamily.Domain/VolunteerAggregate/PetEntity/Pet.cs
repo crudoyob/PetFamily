@@ -1,13 +1,15 @@
 ﻿using CSharpFunctionalExtensions;
 using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Errors;
 using PetFamily.Domain.Shared.Ids;
+using PetFamily.Domain.Shared.Interfaces;
 using PetFamily.Domain.Shared.ValueObjects;
 using PetFamily.Domain.VolunteerAggregate.PetEntity.ValueObjects;
 using PetFamily.Domain.VolunteerAggregate.ValueObjects;
 
 namespace PetFamily.Domain.VolunteerAggregate.PetEntity;
 
-public sealed class Pet : Shared.Entity<PetId>
+public sealed class Pet : BaseEntity<PetId>, ISoftDeletable
 {
     private readonly List<HelpRequisite> _helpRequisites = new();
     private readonly List<VaccinationInfo> _vaccinationInfo = new();
@@ -25,6 +27,8 @@ public sealed class Pet : Shared.Entity<PetId>
     public HelpStatus HelpStatus { get; private set; } = null!;
     public IReadOnlyList<HelpRequisite> HelpRequisites => _helpRequisites;
     public DateTime CreatedAt { get; private set; }
+    public bool IsDeleted { get; private set; }
+    public DateTime? DeletionDate { get; private set; } = null;
 
     private Pet(PetId id) : base(id) { }
 
@@ -81,5 +85,23 @@ public sealed class Pet : Shared.Entity<PetId>
             phoneNumber, 
             birthDate, 
             helpStatus);
+    }
+    
+    public void Delete(bool cascade = true)
+    {
+        if (IsDeleted)
+            return;
+        
+        IsDeleted = true;
+        DeletionDate = DateTime.UtcNow;
+    }
+
+    public void Restore(bool cascade = true)
+    {
+        if (IsDeleted == false)
+            return;
+        
+        IsDeleted = false;
+        DeletionDate = null;
     }
 }

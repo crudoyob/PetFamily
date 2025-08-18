@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using PetFamily.Application;
-using PetFamily.Domain.Shared;
+using PetFamily.Domain.Shared.Errors;
 using PetFamily.Domain.Shared.Ids;
 using PetFamily.Domain.VolunteerAggregate;
 using PetFamily.Domain.VolunteerAggregate.ValueObjects;
@@ -17,13 +17,20 @@ public class VolunteerRepository : IVolunteerRepository
         _dbContext =  dbContext;
     }
     
-    public async Task<Guid> Add(Volunteer volunteer, CancellationToken cancellationToken)
+    public async Task<Result<Guid, Error>> Add(Volunteer volunteer, CancellationToken cancellationToken)
     {
-        await _dbContext.AddAsync(volunteer, cancellationToken);
+        try
+        {
+            await _dbContext.AddAsync(volunteer, cancellationToken);
         
-        await _dbContext.SaveChangesAsync(cancellationToken);
+            await _dbContext.SaveChangesAsync(cancellationToken);
         
-        return volunteer.Id;
+            return (Guid) volunteer.Id;
+        }
+        catch (Exception ex)
+        {
+            return Errors.General.Unexcepted(ex.Message);
+        }
     }
 
     public async Task<Result<Volunteer, Error>> GetById(VolunteerId volunteerId, CancellationToken cancellationToken)
@@ -32,7 +39,7 @@ public class VolunteerRepository : IVolunteerRepository
             .Include(v => v.Pets)
             .FirstOrDefaultAsync(v => v.Id == volunteerId.Value, cancellationToken: cancellationToken);
 
-        if (volunteer == null)
+        if (volunteer is null)
             return Errors.General.NotFound(volunteerId);
         
         return volunteer;
@@ -75,6 +82,27 @@ public class VolunteerRepository : IVolunteerRepository
         catch (Exception ex)
         {
             return Errors.General.Unexcepted(ex.Message).ToErrorList();
+        }
+    }
+    
+    public async Task<Result<Guid, Error>> Delete(Volunteer volunteer, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var res = await _dbContext.Volunteers.FirstOrDefaultAsync(v => v.Id == volunteer.Id.Value,
+                cancellationToken);
+            
+            if (res is null)
+                return Errors.General.NotFound();
+            
+            _dbContext.Volunteers.Remove(volunteer);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+            
+            return (Guid) volunteer.Id;
+        }
+        catch (Exception ex)
+        {
+            return Errors.General.Unexcepted(ex.Message);
         }
     }
 }
